@@ -1,0 +1,76 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Genres {
+  id    Int          @id @default(autoincrement())
+  genre String       @unique
+  games GameGenres[]
+}
+
+model Platforms {
+  id       Int             @id @default(autoincrement())
+  platform String          @unique
+  games    GamePlatforms[]
+}
+
+model Developer {
+  id   Int    @id @default(autoincrement())
+  name String
+  game Game[]
+}
+
+model Game {
+  id           Int             @id @default(autoincrement())
+  name         String
+  description  String
+  image        String
+  developerId  Int
+  developer    Developer       @relation(fields: [developerId], references: [id])
+  genres       GameGenres[]
+  platforms    GamePlatforms[]
+  interactions Interaction[]
+  postedBy     Int
+  user         User            @relation(fields: [postedBy], references: [id], onDelete: Cascade)
+}
+
+model User {
+  id           Int           @id @default(autoincrement())
+  name         String
+  passwordHash String
+  interactions Interaction[]
+  postedGames  Game[]
+}
+
+model Interaction {
+  id     Int    @id @default(autoincrement())
+  type   String
+  userId Int
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  gameId Int
+  game   Game   @relation(fields: [gameId], references: [id], onDelete: Cascade)
+}
+
+model GameGenres {
+  id      Int    @id @default(autoincrement())
+  gameId  Int
+  game    Game   @relation(fields: [gameId], references: [id], onDelete: Cascade)
+  genreId Int
+  genre   Genres @relation(fields: [genreId], references: [id], onDelete: Cascade)
+}
+
+model GamePlatforms {
+  id         Int       @id @default(autoincrement())
+  gameId     Int
+  game       Game      @relation(fields: [gameId], references: [id], onDelete: Cascade)
+  platformId Int
+  platform   Platforms @relation(fields: [platformId], references: [id], onDelete: Cascade)
+}
