@@ -11,35 +11,35 @@ datasource db {
 }
 
 model Genres {
-  id    Int          @id @default(autoincrement())
-  genre String       @unique
-  games GameGenres[]
+  id    Int    @id @default(autoincrement())
+  name  String @unique
+  games Game[]
 }
 
 model Platforms {
-  id       Int             @id @default(autoincrement())
-  platform String          @unique
-  games    GamePlatforms[]
+  id    Int    @id @default(autoincrement())
+  name  String @unique
+  games Game[]
 }
 
 model Developer {
   id   Int    @id @default(autoincrement())
-  name String
+  name String @unique
   game Game[]
 }
 
 model Game {
-  id           Int             @id @default(autoincrement())
+  id           Int           @id @default(autoincrement())
   name         String
   description  String
   image        String
   developerId  Int
-  developer    Developer       @relation(fields: [developerId], references: [id])
-  genres       GameGenres[]
-  platforms    GamePlatforms[]
+  developer    Developer     @relation(fields: [developerId], references: [id])
+  genres       Genres[]
+  platforms    Platforms[]
   interactions Interaction[]
   postedBy     Int
-  user         User            @relation(fields: [postedBy], references: [id], onDelete: Cascade)
+  user         User          @relation(fields: [postedBy], references: [id], onDelete: Cascade)
 }
 
 model User {
@@ -57,20 +57,4 @@ model Interaction {
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   gameId Int
   game   Game   @relation(fields: [gameId], references: [id], onDelete: Cascade)
-}
-
-model GameGenres {
-  id      Int    @id @default(autoincrement())
-  gameId  Int
-  game    Game   @relation(fields: [gameId], references: [id], onDelete: Cascade)
-  genreId Int
-  genre   Genres @relation(fields: [genreId], references: [id], onDelete: Cascade)
-}
-
-model GamePlatforms {
-  id         Int       @id @default(autoincrement())
-  gameId     Int
-  game       Game      @relation(fields: [gameId], references: [id], onDelete: Cascade)
-  platformId Int
-  platform   Platforms @relation(fields: [platformId], references: [id], onDelete: Cascade)
 }
