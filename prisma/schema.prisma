@@ -44,7 +44,7 @@ model Game {
 
 model User {
   id           Int           @id @default(autoincrement())
-  name         String
+  name         String        @unique
   passwordHash String
   interactions Interaction[]
   postedGames  Game[]

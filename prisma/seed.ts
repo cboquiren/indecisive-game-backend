@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import bcrypt from "bcrypt";
+import { encryptPassword } from "../src/auth-utils";
 
 const prisma = new PrismaClient();
 
@@ -20,21 +20,21 @@ const seed = async () => {
   const defaultUser = await prisma.user.create({
     data: {
       name: "default",
-      passwordHash: await bcrypt.hash("default", 11),
+      passwordHash: await encryptPassword("default"),
     },
   });
 
   const kuya = await prisma.user.create({
     data: {
       name: "kuya",
-      passwordHash: await bcrypt.hash("password", 11),
+      passwordHash: await encryptPassword("password"),
     },
   });
 
   const carl = await prisma.user.create({
     data: {
       name: "carl",
-      passwordHash: await bcrypt.hash("test", 11),
+      passwordHash: await encryptPassword("test"),
     },
   });
 
