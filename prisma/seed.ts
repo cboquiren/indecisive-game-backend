@@ -528,7 +528,7 @@ const seed = async () => {
       description:
         "Baldur's Gate 3 is a role-playing game set in the Dungeons & Dragons universe, featuring a rich narrative, character customization, party-based adventuring, and turn-based combat in a detailed fantasy world.",
       image:
-        "Baldur's Gate 3 is a role-playing game set in the Dungeons & Dragons universe, featuring a rich narrative, character customization, party-based adventuring, and turn-based combat in a detailed fantasy world.",
+        "https://preview.redd.it/new-game-cover-from-larians-website-v0-m2lmw222h0ka1.png?auto=webp&s=ba904ad42906960a96a70ce1c27ee6d3ff5edead",
       developerId: larian.id,
       postedBy: defaultUser.id,
       platforms: {
@@ -876,7 +876,7 @@ const seed = async () => {
       description:
         "In BioShock Infinite, players control Booker DeWitt, a former Pinkerton agent who is sent to the flying city of Columbia to rescue Elizabeth, a young woman who has been imprisoned there for years, unraveling an immersive storyline filled with intense combat and mind-bending twists.",
       image:
-        "https://www.wired.com/images_blogs/gamelife/2012/12/Screen-shot-2012-12-08-at-12.24.32-PM.png",
+        "https://imageio.forbes.com/blogs-images/erikkain/files/2012/12/cover_close-upDESIGN03.jpg?height=576&width=406&fit=bounds",
       developerId: irrationalGames.id,
       postedBy: kuya.id,
       platforms: {

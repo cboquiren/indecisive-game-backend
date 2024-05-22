@@ -39,7 +39,7 @@ export const authenticationMiddleware = (req: Request, res: Response, next: Next
   const [, token] = req.headers.authorization?.split(" ") || [];
   const userJWTData = readDataFromAuthToken(token);
   if (userJWTData === null) {
-    return res.status(401).json({ message: "Invalid Token" });
+    return res.status(406).json({ message: "Invalid Token" });
   }
   const userFromJwt = prisma.user.findFirst({
     where: {

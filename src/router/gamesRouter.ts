@@ -1,8 +1,6 @@
 import { Router } from "express";
 import { authenticationMiddleware, readDataFromAuthToken } from "../auth-utils";
 import { prisma } from "./router-util";
-import { validateRequest } from "zod-express-middleware";
-import { z } from "zod";
 
 export const gameRouter = Router();
 
@@ -23,11 +21,16 @@ gameRouter.get("/games", async (req, res) => {
     },
   });
 
-  const [, token] = req.headers.authorization?.split(" ") || [];
+  const token = req.headers.authorization;
+
+  if (token === undefined) {
+    return res.status(200).json({ games: games });
+  }
+
   const possibleUser = readDataFromAuthToken(token);
 
   if (!possibleUser) {
-    return res.header("Access-Control-Allow-Origin", "*").status(200).json({ games: games });
+    return res.status(200).json({ games: games });
   }
 
   const userGames = await prisma.game.findMany({
@@ -36,8 +39,5 @@ gameRouter.get("/games", async (req, res) => {
     },
   });
 
-  return res
-    .header("Access-Control-Allow-Origin", "*")
-    .status(200)
-    .json({ games: { ...games, ...userGames } });
+  return res.status(200).json({ games: [...games, ...userGames] });
 });

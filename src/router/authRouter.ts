@@ -11,11 +11,11 @@ authRouter.post(
   "/auth/login",
   validateRequest({
     body: z.object({
-      name: z.string(),
+      username: z.string(),
       password: z.string(),
     }),
   }),
-  async ({ body: { name: bodyName, password: bodyPassword } }, res) => {
+  async ({ body: { username: bodyName, password: bodyPassword } }, res) => {
     const user = await prisma.user.findFirst({
       where: {
         name: bodyName,
@@ -42,22 +42,22 @@ authRouter.post(
   "/auth/create-account",
   validateRequest({
     body: z.object({
-      name: z.string(),
+      username: z.string(),
       password: z.string(),
     }),
   }),
   async (req, res) => {
     const checkExistingUsers = await prisma.user.findFirst({
       where: {
-        name: req.body.name,
+        name: req.body.username,
       },
     });
-    if (checkExistingUsers) {
-      return res.status(400).json({ message: "Username Already Taken" });
+    if (checkExistingUsers !== null) {
+      return res.status(403).json({ message: "Username Already Taken" });
     }
     const newUser = await prisma.user.create({
       data: {
-        name: req.body.name,
+        name: req.body.username,
         passwordHash: await encryptPassword(req.body.password),
       },
     });

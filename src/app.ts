@@ -3,6 +3,7 @@ import { User } from "@prisma/client";
 import { authRouter } from "./router/authRouter";
 import { interactionRouter } from "./router/interactionRouter";
 import { gameRouter } from "./router/gamesRouter";
+import cors from "cors";
 
 const app = express();
 
@@ -20,6 +21,9 @@ declare global {
   }
 }
 
+app.use(
+  cors({ origin: "http://localhost:5173", methods: ["POST", "GET", "PATCH", "DELETE", "OPTIONS"] })
+);
 app.use(express.json());
 
 app.use(gameRouter);
