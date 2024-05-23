@@ -1,6 +1,9 @@
 import { Router } from "express";
 import { authenticationMiddleware, readDataFromAuthToken } from "../auth-utils";
 import { prisma } from "./router-util";
+import { z } from "zod";
+import { validateRequest } from "zod-express-middleware";
+import { getMaxListeners } from "events";
 
 export const gameRouter = Router();
 
@@ -18,6 +21,11 @@ gameRouter.get("/games", async (req, res) => {
   const games = await prisma.game.findMany({
     where: {
       postedBy: defaultUser.id,
+    },
+    include: {
+      genres: true,
+      platforms: true,
+      developer: true,
     },
   });
 

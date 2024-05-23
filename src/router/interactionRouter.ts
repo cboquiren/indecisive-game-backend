@@ -37,7 +37,7 @@ interactionRouter.post(
         userId: req.user!.id,
       },
     });
-    return res.status(200).json({ message: "Created Interaction" });
+    return res.status(200).json({ message: "Created Interaction", interaction: newInteraction });
   }
 );
 
@@ -74,6 +74,6 @@ interactionRouter.delete(
       },
     });
 
-    return res.status(200).json({ message: "Interaction Deleted" });
+    return res.status(200).json({ message: "Interaction Deleted", interaction: deleteInteraction });
   }
 );

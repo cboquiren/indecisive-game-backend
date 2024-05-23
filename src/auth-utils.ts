@@ -36,7 +36,7 @@ export const readDataFromAuthToken = (token?: string) => {
 };
 
 export const authenticationMiddleware = (req: Request, res: Response, next: NextFunction) => {
-  const [, token] = req.headers.authorization?.split(" ") || [];
+  const token = req.headers.authorization;
   const userJWTData = readDataFromAuthToken(token);
   if (userJWTData === null) {
     return res.status(406).json({ message: "Invalid Token" });

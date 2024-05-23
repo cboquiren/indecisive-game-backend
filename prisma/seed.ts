@@ -342,7 +342,7 @@ const seed = async () => {
         connect: [pc],
       },
       genres: {
-        connect: [strategy, coop, rpg, action],
+        connect: [moba, strategy, coop, rpg, action],
       },
     },
   });
